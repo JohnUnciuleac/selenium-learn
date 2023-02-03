@@ -3,7 +3,7 @@ package PageModels;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class RAPage {
+public class RALocatorsPage {
 
     //Login page elements
     @FindBy(xpath = "//input[@id='inputUsername']")
