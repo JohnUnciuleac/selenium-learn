@@ -10,20 +10,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.BrowserHelper;
-import PageModels.RAPage;
+import PageModels.RALocatorsPage;
 
 import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RATests {
+public class RALocatorsTests {
     private final BrowserHelper browserHelper = new BrowserHelper();
     private WebDriver driver;
-    private RAPage raPage;
+    private RALocatorsPage raPage;
 
     @BeforeAll
     void beforeAll() {
         driver = browserHelper.getChromeDriver();
-        raPage = PageFactory.initElements(driver, RAPage.class);
+        raPage = PageFactory.initElements(driver, RALocatorsPage.class);
 
         driver.get("https://rahulshettyacademy.com/locatorspractice/");
     }
