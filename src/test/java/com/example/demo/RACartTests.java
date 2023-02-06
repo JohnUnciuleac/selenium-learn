@@ -1,21 +1,18 @@
 package com.example.demo;
 
 import PageModels.RACartPage;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import utils.BrowserHelper;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RACartTests {
 
     private final BrowserHelper browserHelper = new BrowserHelper();
@@ -23,19 +20,21 @@ public class RACartTests {
     private WebDriverWait wait;
     private RACartPage raCartPage;
 
-    @BeforeAll
-    void beforeAll() {
+    @BeforeMethod
+    void beforeMethod() {
 
         driver = browserHelper.getChromeDriver();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
         raCartPage = PageFactory.initElements(driver, RACartPage.class);
 
         driver.get("https://rahulshettyacademy.com/seleniumPractise/");
     }
 
-    @AfterAll
-    void afterAll() {
+    @AfterMethod
+    void afterMethod() {
         driver.close();
     }
 

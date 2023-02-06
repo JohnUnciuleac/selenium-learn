@@ -1,36 +1,42 @@
 package com.example.demo;
 
 import PageModels.RADropdownsPage;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import utils.BrowserHelper;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+import java.time.Duration;
+
+
 public class RADropdownsTests {
 
     private final BrowserHelper browserHelper = new BrowserHelper();
     private WebDriver driver;
+    private WebDriverWait wait;
     private RADropdownsPage raDropdownsPage;
 
-    @BeforeAll
-    void beforeAll() {
+    @BeforeMethod
+    void beforeMethod() {
 
         driver = browserHelper.getChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         raDropdownsPage = PageFactory.initElements(driver, RADropdownsPage.class);
 
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
     }
 
-    @AfterAll
-    void afterAll() {
+    @AfterMethod
+    void afterMethod() {
         driver.close();
     }
 
@@ -45,10 +51,9 @@ public class RADropdownsTests {
         dropdownOptions.selectByIndex(3);
 
         raDropdownsPage.dropdownPassengers.click();
-        Thread.sleep(1000);
 
         for (int i = 0; i < 5; i++) {
-            raDropdownsPage.buttonIncreaseAdultsNumber.click();
+            wait.until(ExpectedConditions.elementToBeClickable(raDropdownsPage.buttonIncreaseAdultsNumber)).click();
         }
 
         Assert.assertEquals(raDropdownsPage.dropdownPassengers.getText(), "6 Adult");
@@ -56,7 +61,6 @@ public class RADropdownsTests {
         raDropdownsPage.buttonDoneSelectingAdultsNumber.click();
 
         raDropdownsPage.inputAutoSuggest.sendKeys("ind");
-        Thread.sleep(1000);
 
         for (WebElement country : raDropdownsPage.listOfCountries) {
             if (country.getText().equals("India")) {
@@ -74,17 +78,10 @@ public class RADropdownsTests {
 
         raDropdownsPage.dropdownFromCity.click();
 
-        Thread.sleep(1000);
-        raDropdownsPage.optionFromCity.click();
-        Thread.sleep(1000);
-        raDropdownsPage.optionToCity.click();
-        Thread.sleep(1000);
-
-        raDropdownsPage.dateDepart.click();
-        Thread.sleep(1000);
-
-        raDropdownsPage.buttonSearch.click();
-        Thread.sleep(3000);
+        wait.until(ExpectedConditions.elementToBeClickable(raDropdownsPage.optionFromCity)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(raDropdownsPage.optionToCity)).click();
+        wait.until(ExpectedConditions.elementToBeClickable( raDropdownsPage.dateDepart)).click();
+        wait.until(ExpectedConditions.elementToBeClickable( raDropdownsPage.buttonSearch)).click();
     }
 
 }

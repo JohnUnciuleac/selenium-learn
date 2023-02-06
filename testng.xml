@@ -1,0 +1,7 @@
+<suite name="Test Suite">
+    <test name="Test Case">
+        <classes>
+            <class name="com.example.demo.RACartTests"/>
+        </classes>
+    </test>
+</suite>
