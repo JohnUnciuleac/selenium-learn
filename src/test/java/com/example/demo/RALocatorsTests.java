@@ -18,13 +18,14 @@ import java.time.Duration;
 public class RALocatorsTests {
     private final BrowserHelper browserHelper = new BrowserHelper();
     private WebDriver driver;
+    private WebDriverWait wait;
     private RALocatorsPage raPage;
 
     @BeforeAll
     void beforeAll() {
         driver = browserHelper.getChromeDriver();
         raPage = PageFactory.initElements(driver, RALocatorsPage.class);
-
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         driver.get("https://rahulshettyacademy.com/locatorspractice/");
     }
 
@@ -44,7 +45,7 @@ public class RALocatorsTests {
 
         raPage.buttonSign.click();
 
-        System.out.println(new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.elementToBeClickable(raPage.errorText)).getText());
+        System.out.println(wait.until(ExpectedConditions.elementToBeClickable(raPage.errorText)).getText());
 
     }
 
@@ -57,9 +58,7 @@ public class RALocatorsTests {
         raPage.inputEmailResetCredentials.sendKeys("rahulshettyacademy");
         raPage.inputPhoneNumberResetCredentials.sendKeys("8593762834");
 
-        Thread.sleep(2000);
-
-        raPage.buttonResetLogin.click();
+        wait.until(ExpectedConditions.elementToBeClickable(raPage.buttonResetLogin)).click();
 
         System.out.println(raPage.textInfoResetCredentials.getText());
 
@@ -76,9 +75,7 @@ public class RALocatorsTests {
 
         raPage.buttonSign.click();
 
-        Thread.sleep(3000);
-
-        Assert.assertEquals(raPage.textSuccessfulLogin.getText(),"You are successfully logged in.");
+        Assert.assertEquals(raPage.textSuccessfulLogin.getText(), "You are successfully logged in.");
         Assert.assertEquals(raPage.textUsernameSuccessfulLogin.getText(), "Hello Selenium Test,");
 
         raPage.buttonLogout.click();
