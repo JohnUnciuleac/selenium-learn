@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import utils.BrowserHelper;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,6 +38,8 @@ public class RADropdownsTests {
     void dropdownsTest() throws InterruptedException {
 
         raDropdownsPage.checkboxRoundTrip.click();
+        Assert.assertTrue(raDropdownsPage.checkboxRoundTrip.isSelected());
+        Assert.assertTrue(raDropdownsPage.dropdownReturnDate.isEnabled());
 
         Select dropdownOptions = new Select(raDropdownsPage.dropdownCurrency);
         dropdownOptions.selectByIndex(3);
@@ -47,6 +50,8 @@ public class RADropdownsTests {
         for (int i = 0; i < 5; i++) {
             raDropdownsPage.buttonIncreaseAdultsNumber.click();
         }
+
+        Assert.assertEquals(raDropdownsPage.dropdownPassengers.getText(), "6 Adult");
 
         raDropdownsPage.buttonDoneSelectingAdultsNumber.click();
 
@@ -60,12 +65,26 @@ public class RADropdownsTests {
             }
         }
 
+        for (WebElement discount : raDropdownsPage.checkboxesDiscount) {
+            if (discount.getText().equals("Student")) {
+                discount.click();
+                break;
+            }
+        }
+
         raDropdownsPage.dropdownFromCity.click();
+
         Thread.sleep(1000);
         raDropdownsPage.optionFromCity.click();
         Thread.sleep(1000);
         raDropdownsPage.optionToCity.click();
+        Thread.sleep(1000);
 
+        raDropdownsPage.dateDepart.click();
+        Thread.sleep(1000);
+
+        raDropdownsPage.buttonSearch.click();
+        Thread.sleep(3000);
     }
 
 }
